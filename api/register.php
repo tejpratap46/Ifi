@@ -16,7 +16,7 @@ if (! empty ( $apikey )) {
 	die ( "{\"status\":0," . "\"error\":\"invalid apikey\"}" );
 }
 
-if ($name && $email && $password) {
+if ($name && $email && strlen($password) > 5) {
 	$query = mysql_query ( "INSERT INTO user (name,email,password) VALUES ('$name','$email','$password')" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	$info = mysql_fetch_array ( $query );
 	echo "{";

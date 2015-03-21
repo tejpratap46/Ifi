@@ -91,10 +91,10 @@ require 'connection.php';
 function showClipboard() {
 	if ($_COOKIE ['ifiusername']) {
 		if ($_POST ['clipText']) {
-			$insert = mysql_query ( "INSERT INTO `clipboard` (`username`, `text`) VALUES ('" . $_COOKIE ['username'] . "','" . $_POST ['clipText'] . "')" ) or die ( "Error , cannot add" );
+			$insert = mysql_query ( "INSERT INTO `clipboard` (`username`, `text`) VALUES ('" . $_COOKIE ['ifiusername'] . "','" . $_POST ['clipText'] . "')" ) or die ( "Error , cannot add" );
 		}
 		
-		$query = mysql_query ( "SELECT * FROM `clipboard` WHERE username = '" . $_COOKIE ['username'] . "' ORDER BY `clipboard`.`index` DESC" );
+		$query = mysql_query ( "SELECT * FROM `clipboard` WHERE username = '" . $_COOKIE ['ifiusername'] . "' ORDER BY `clipboard`.`index` DESC" );
 		$rows = mysql_num_rows ( $query );
 		if ($rows > 0) {
 			for($i = 0; $i < $rows; $i ++) {
