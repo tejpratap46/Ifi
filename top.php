@@ -85,9 +85,16 @@ function showFormulas() {
 	$query = mysql_query ( "SELECT * FROM `top` ORDER BY `top`.`total_shares` DESC" );
 	for($i = 0; $i < mysql_num_rows ( $query ); $i ++) {
 		$qarray = mysql_fetch_array ( $query );
+		if ($i > 6) {
+			$jarray = json_decode ( $qarray ["formula"] , true);
+			$formula = "Trigger : " . $jarray ['action1'] . "<br />Condition 1 : " . $jarray ['condition1'] . "<br />Condition 2 : " . $jarray ['condition2'] . "<br />Action : " . $jarray ['action2'] . "<br />Condition 1 : " . $jarray ['condition3'] . "<br />Condition 2 : " . $jarray ['condition4'];
+			// print_r($jarray);
+		} else {
+			$formula = $qarray ["formula"];
+		}
 		echo '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
 		echo '<p style="font-size: 30px; color: #424B5A;"><span class="badge" style="font-size: 30px;">' . ($i + 1) . '</span> ' . $qarray ["name"] . '</p>';
-		echo '<p style="font-size: 20px; padding: 1%;">' . $qarray ["formula"] . '</p>';
+		echo '<p style="font-size: 20px; padding: 1%;">'. $formula .'</p>';
 		echo "</div>";
 	}
 }
