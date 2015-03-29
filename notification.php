@@ -13,7 +13,7 @@ session_start ();
 <meta name="author" content="">
 <link rel="icon" href="favicon.ico">
 
-<title>If i :: Top Formulas</title>
+<title>If i :: Notifications</title>
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -90,7 +90,9 @@ function showNotifications() {
 			for($i = 0; $i < $rows; $i ++) {
 				$qarray = mysql_fetch_array ( $query );
 				echo '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
-				echo '<p style="font-size: 24px; padding: 1%;"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $qarray ['text'] . "</p>";
+				$JSONArray = json_decode($qarray ['text'], true);
+				$text = "By App : ".$JSONArray['package']."<br />Title : ".$JSONArray['title']."<br />Text : ".$JSONArray['text']."<br />Sub Text : ".$JSONArray['subtext'];
+				echo '<p style="font-size: 24px; padding: 1%;"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $text . "</p>";
 				echo "</div>";
 			}
 		} else {
