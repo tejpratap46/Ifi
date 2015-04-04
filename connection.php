@@ -16,8 +16,6 @@
   $user = "u451933511_brain";
   $password = "9860637720";
   */
- 
-
 
 $user = "root";
 $password = "";

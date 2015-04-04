@@ -1,6 +1,7 @@
 <?php
 error_reporting ( 0 );
 require 'connection.php';
+// $websiteurl = "http://www.brainstrom.zz.mu/ifi/" // to use for calling api using file_get_contents (Using to send push notification call in clipnoard.php)
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,7 @@ require 'connection.php';
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="navbar-fixed-top.css" rel="stylesheet">
@@ -62,7 +64,7 @@ require 'connection.php';
 			<!--/.nav-collapse -->
 		</div>
 	</nav>
-
+	<div class="notification">Loading...</div>
 	<div class="container" style="width: 100%; margin-top: 70px;">
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
@@ -85,6 +87,21 @@ require 'connection.php';
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script type='text/javascript'>
+	$(document).click(function(e) {
+      $id = $(e.target).attr('id');
+      if ($id == 'sendToPhone') {
+      	$('.notification').show();
+		var message = $(e.target).parent().parent().find('#push').text();
+		$('.notification').load('api/pushbotsPush.php',{
+		m: message, i: <?php echo "'".$_COOKIE['ifiusername']."'" ?>} ,
+			function(){
+			/* Stuff to do after the page is loaded */
+			$('.notification').stop().text('Sent To Phone').fadeIn(400).delay(3000).fadeOut(400);
+		});
+      }
+    });
+	</script>
 </body>
 </html>
 <?php
@@ -92,6 +109,9 @@ function showClipboard() {
 	if ($_COOKIE ['ifiusername']) {
 		if ($_POST ['clipText']) {
 			$insert = mysql_query ( "INSERT INTO `clipboard` (`username`, `text`) VALUES ('" . $_COOKIE ['ifiusername'] . "','" . $_POST ['clipText'] . "')" ) or die ( "Error , cannot add" );
+				// echo '<a href="api/pushbotsPush.php?message='.$_POST ['clipText'].'&gcmid='.$pushArray['gcmid'].'">link</a>';
+				// $res = file_get_contents('http://www.brainstrom.zz.mu/ifi/api/pushbotsPush.php?message='.$_POST ['clipText'].'&gcmid='.$pushArray['gcmid']);
+				// echo $res;
 		}
 		
 		$query = mysql_query ( "SELECT * FROM `clipboard` WHERE username = '" . $_COOKIE ['ifiusername'] . "' ORDER BY `clipboard`.`index` DESC" );
@@ -99,9 +119,14 @@ function showClipboard() {
 		if ($rows > 0) {
 			for($i = 0; $i < $rows; $i ++) {
 				$qarray = mysql_fetch_array ( $query );
-				echo '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
-				echo '<p style="font-size: 24px; padding: 1%;"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $qarray ['text'] . "</p>";
-				echo "</div>";
+				echo '<div class="row" colalert alert-info" role="alert" style="background-color: #F8F8F8;">';
+				echo '<div class="col-md-10">';
+				echo '<p style="font-size: 24px; padding: 1%;" id="push"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $qarray ['text'] . "</p>";
+				echo '</div>';
+				echo '<div class="col-md-2">';
+				echo '<button style="width: 100%; text-align: center;" class="btn btn-default" id="sendToPhone">Send To Phone</button>';
+				echo '</div>';
+				echo '</div>';
 			}
 		} else {
 			echo '<div class="alert alert-danger" role="alert">';

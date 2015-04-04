@@ -1,0 +1,27 @@
+.sidebar{
+	margin-top: 20px;
+	padding: 0;
+}
+
+.ellipsis {
+	text-overflow: ellipsis;
+	/* Required for text-overflow to do anything */
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.notification {
+	width: 200px;
+	height: auto;
+	position: fixed;
+	left: 50%;
+	margin-left: -100px;
+	bottom: 10px;
+	background-color: #383838;
+	color: #F0F0F0;
+	padding: 10px;
+	z-index: 10;
+	border-radius: 2px;
+	text-align: center;
+	display: none;
+}
