@@ -1,6 +1,7 @@
 <?php
 error_reporting ( 0 );
 require ("../connection.php");
+require 'top.pagination.php';
 
 $apikey = $_GET ['apikey'];
 
@@ -24,12 +25,14 @@ for($i = 0; $i < mysql_num_rows ( $query ); $i ++) {
 		echo "{";
 		echo "\"index\":\"" . $info ['index'] . "\",";
 		echo "\"name\":\"" . $info ['name'] . "\",";
+		echo "\"name\":\"" . $info ['total_shares'] . "\",";
 		echo "\"formula\":\"" . $info ['formula'] . "\"";
 		echo "}";
 	} else {
 		echo "{";
 		echo "\"index\":\"" . $info ['index'] . "\",";
 		echo "\"name\":\"" . $info ['name'] . "\",";
+		echo "\"name\":\"" . $info ['total_shares'] . "\",";
 		echo "\"formula\":\"" . $info ['formula'] . "\"";
 		echo "},";
 	}
