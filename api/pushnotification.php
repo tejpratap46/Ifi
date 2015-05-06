@@ -6,12 +6,12 @@ $registrationIds = array (
 );
 // prep the bundle
 $msg = array (
-		'message' => 'here is a message. message',
-		'title' => 'This is a title. title',
+		'message' => 'Message',
+		'title' => 'Title',
 		'subtitle' => 'This is a subtitle. subtitle',
 		'tickerText' => 'Ticker text here...Ticker text here...Ticker text here',
-		'vibrate' => 1,
-		'sound' => 1
+		'vibrate' => true,
+		'sound' => true
 );
 $fields = array (
 		'registration_ids' => $registrationIds,

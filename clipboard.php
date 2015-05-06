@@ -124,7 +124,7 @@ function showClipboard() {
 				echo '<p style="font-size: 24px; padding: 1%;" id="push"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $qarray ['text'] . "</p>";
 				echo '</div>';
 				echo '<div class="col-md-2">';
-				echo '<button style="width: 100%; text-align: center;" class="btn btn-default" id="sendToPhone">Send To Phone</button>';
+				echo '<button style="height: 70px; width: 100%; text-align: center;" class="btn btn-primary" id="sendToPhone">Send To Phone</button>';
 				echo '</div>';
 				echo '</div>';
 			}
