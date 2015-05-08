@@ -1,6 +1,7 @@
 <?php
 error_reporting ( 0 );
 require ("../connection.php");
+require '../pagination/pagination.notification.php';
 
 $apikey = $_GET ['apikey'];
 $username = $_GET ['username'];

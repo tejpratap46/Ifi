@@ -8,8 +8,11 @@ if (! $limit) {
 }
 
 // count total pages
-
-$query = "SELECT COUNT(*) as num FROM `top`";
+if ($_GET ['q']) { // For search
+	$query = "SELECT COUNT(*) as num FROM `top` WHERE name LIKE '%$q%' OR WHERE formula LIKE '%$q%'";
+} else { // otherwise
+	$query = "SELECT COUNT(*) as num FROM `top`";
+}
 
 $total_pages = mysql_fetch_array ( mysql_query ( $query ) );
 $total_pages = $total_pages ['num'];
@@ -21,7 +24,8 @@ if ($page) {
 	if ($page < 2) {
 		$start = 0;
 	} else if ($page > $total_pages) {
-		$start = $total_pages;
+		// $start = $total_pages;
+		die();
 	} else {
 		$start = ($page - 1) * $limit;
 	}

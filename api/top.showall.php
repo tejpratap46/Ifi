@@ -1,7 +1,7 @@
 <?php
 error_reporting ( 0 );
 require ("../connection.php");
-require 'top.pagination.php';
+require '../pagination/pagination.top.php';
 
 $apikey = $_GET ['apikey'];
 
@@ -15,7 +15,7 @@ if (! empty ( $apikey )) {
 }
 
 echo "{";
-$query = mysql_query ( "SELECT * FROM `top` WHERE 1 ORDER BY `top`.`index` DESC" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
+$query = mysql_query ( "SELECT * FROM `top` WHERE 1 ORDER BY `top`.`total_shares` DESC LIMIT $start,$limit" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 echo "\"status\":1,";
 echo "\"results\":" . mysql_num_rows ( $query ) . ",";
 echo "\"text\":[";
@@ -23,17 +23,17 @@ for($i = 0; $i < mysql_num_rows ( $query ); $i ++) {
 	$info = mysql_fetch_array ( $query );
 	if ($i + 1 == mysql_num_rows ( $query )) {
 		echo "{";
-		echo "\"index\":\"" . $info ['index'] . "\",";
-		echo "\"name\":\"" . $info ['name'] . "\",";
-		echo "\"name\":\"" . $info ['total_shares'] . "\",";
-		echo "\"formula\":\"" . $info ['formula'] . "\"";
+		echo '"index":"' . $info ['index'] . '",';
+		echo '"name":"' . $info ['name'] . '",';
+		echo '"total_shares":"' . $info ['total_shares'] . '",';
+		echo '"formula":' . $info ['formula'];
 		echo "}";
 	} else {
 		echo "{";
-		echo "\"index\":\"" . $info ['index'] . "\",";
-		echo "\"name\":\"" . $info ['name'] . "\",";
-		echo "\"name\":\"" . $info ['total_shares'] . "\",";
-		echo "\"formula\":\"" . $info ['formula'] . "\"";
+		echo '"index":"' . $info ['index'] . '",';
+		echo '"name":"' . $info ['name'] . '",';
+		echo '"total_shares":"' . $info ['total_shares'] . '",';
+		echo '"formula":' . $info ['formula'];
 		echo "},";
 	}
 }

@@ -16,6 +16,7 @@ require 'connection.php';
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="navbar-fixed-top.css" rel="stylesheet">
@@ -68,7 +69,16 @@ require 'connection.php';
 		<div class="jumbotron">
 			<h1>Top Formulas</h1>
 			<p>The Best Formulas Are Here.</p>
-			<?php showFormulas();?>
+			<div id="formulas">
+				
+			</div>
+			<div class="jumbotron" id="loading">
+				<div class="row well" id="items">
+					<img class="center-image" alt="loading..."
+						src="loading.gif">
+				</div>
+			</div>
+			<?php //showFormulas(); ?>
 		</div>
 	</div>
 	<!-- /container -->
@@ -78,6 +88,63 @@ require 'connection.php';
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	var pg = 1;
+	$(document).ready(function() {
+		ajaxCall(pg);
+	});
+
+	$(window).scroll(function() {
+	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+		   pg = pg + 1;
+		   ajaxCall(pg);
+	   }
+	});
+
+
+	count = 0;
+	function ajaxCall(page){
+		$('#loading').show();
+		$.getJSON('api/top.showall.php?apikey=tejpratap&page=' + page, function(json, textStatus) {
+			$('#loading').hide();
+			try{
+				formulas = json.text;
+				// $.each(formulas, function(arrayID,formula) {
+				//             console.log(formula);
+				// });
+				for (var i = 0; i < formulas.length; i++) {
+					count++;
+					jsonObj = formulas[i];
+					// console.log(jsonObj);
+					name = jsonObj.name;
+					total_shares = jsonObj.total_shares;
+					formulaTrigger = jsonObj.formula.action1;
+					formulaCondition1 = jsonObj.formula.condition1;
+					formulaCondition2 = jsonObj.formula.condition2;
+					formulaAction = jsonObj.formula.action2;
+					formulaCondition3 = jsonObj.formula.condition3;
+					formulaCondition4 = jsonObj.formula.condition4;
+					show = '';
+					show = show + '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
+					show = show + '<h1 style="font-size: 30px; color: #424B5A; font-weight: bold;"><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
+					show = show + '<p style="font-weight: bold;">Trigger : '+ formulaTrigger + '</p>';
+					show = show + '<p>Condition 1 : '+ formulaCondition1 + '</p>';
+					show = show + '<p>Condition 2 : '+ formulaCondition2 + '</p>';
+					show = show + '<p style="font-weight: bold;">Action : '+ formulaAction + '</p>';
+					show = show + '<p>Condition 1 : '+ formulaCondition3 + '</p>';
+					show = show + '<p>Condition 2 : '+ formulaCondition4 + '</p>';
+					show = show + '</div>';
+					prev = $('#formulas').html();
+					$('#formulas').html(prev + show);
+				}
+			}catch(err){
+				$('#loading').hide();
+			}
+			
+		});
+
+	}
+	</script>
 </body>
 </html>
 <?php
