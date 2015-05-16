@@ -17,7 +17,7 @@ if (! empty ( $apikey )) {
 
 if ($username) {
 	echo "{";
-	$query = mysql_query ( "SELECT * FROM notification WHERE username = '" . $username . "' ORDER BY `notification`.`index` DESC" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
+	$query = mysql_query ( "SELECT * FROM notification WHERE username = '" . $username . "' ORDER BY `notification`.`index` DESC  LIMIT $start,$limit" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	echo "\"status\":1,";
 	echo "\"results\":" . mysql_num_rows ( $query ) . ",";
 	echo "\"text\":[";
