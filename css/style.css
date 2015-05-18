@@ -35,6 +35,10 @@
 	font-weight: bold;
 }
 
+.black {
+	color: black;
+}
+
 .center-image {
 	display: block;
 	margin-left: auto;
