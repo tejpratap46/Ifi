@@ -43,23 +43,29 @@ require ("connection.php");
 					<button style="position:fixed; right: 0;" class="btn btn-danger" onclick="$(this).parent().parent().parent().hide();">x</button>
 				</div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-sm-5" style="text-align: center; margin: 0px;">
 					<h3 style="font-weight: bold;">Download From</h3>
 				</div>
 				<div class="col-sm-3 well" style="text-align: center; margin: 0px;">
-					<!-- <a target="_blank" href="https://play.google.com/store/apps/developer?id=TPS+Corp"><img src="http://tejpratap46.github.io/images/google.png" alt="Goole Play Store"></a> -->
 					<a target="_blank" href="https://play.google.com/store/apps/developer?id=TPS+Corp"><h4>Google Play Store</h4></a>
 				</div>
 				<div class="col-sm-3 well" style="text-align: center; margin: 0px;">
-					<!-- <a target="_blank" href="http://www.amazon.com/Tej-Pratap-If-I/dp/B00SOP1PSO/"><img src="http://tejpratap46.github.io/images/amazon.png" alt="Amazon App Play Store"></a> -->
 					<a target="_blank" href="http://www.amazon.com/Tej-Pratap-If-I/dp/B00SOP1PSO/"><h4>Amazon App Store</h4></a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+<script type="text/javascript">
+	function login () {
+		$.getJSON('api/user/login.php?apikey=tejpratap&email=' +  + 'password=', {param1: 'value1'}, function(json, textStatus) {
+			
+		});
+	}
+</script>
 </html>
 <?php
 $email = $_POST ['email'];

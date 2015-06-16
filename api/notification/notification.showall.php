@@ -1,7 +1,7 @@
 <?php
 error_reporting ( 0 );
-require ("../connection.php");
-require '../pagination/pagination.clipboard.php';
+require ("../../connection.php");
+require '../../pagination/pagination.notification.php';
 
 $apikey = $_GET ['apikey'];
 $username = $_GET ['username'];
@@ -17,7 +17,7 @@ if (! empty ( $apikey )) {
 
 if ($username) {
 	echo "{";
-	$query = mysql_query ( "SELECT * FROM clipboard WHERE username = '" . $username . "' ORDER BY `clipboard`.`index` DESC" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
+	$query = mysql_query ( "SELECT * FROM notification WHERE username = '" . $username . "' ORDER BY `notification`.`index` DESC LIMIT $start,$limit" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	echo "\"status\":1,";
 	echo "\"results\":" . mysql_num_rows ( $query ) . ",";
 	echo "\"text\":[";
@@ -26,12 +26,12 @@ if ($username) {
 		if ($i + 1 == mysql_num_rows ( $query )) {
 			echo "{";
 			echo "\"index\":\"" . $info ['index'] . "\",";
-			echo "\"text\":\"" . $info ['text'] . "\"";
+			echo "\"text\":" . $info ['text'];
 			echo "}";
 		} else {
 			echo "{";
 			echo "\"index\":\"" . $info ['index'] . "\",";
-			echo "\"text\":\"" . $info ['text'] . "\"";
+			echo "\"text\":" . $info ['text'];
 			echo "},";
 		}
 	}

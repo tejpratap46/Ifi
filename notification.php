@@ -1,7 +1,6 @@
 <?php
 error_reporting ( 0 );
 require 'connection.php';
-session_start ();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +16,7 @@ session_start ();
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="navbar-fixed-top.css" rel="stylesheet">
@@ -42,6 +42,7 @@ session_start ();
 					<li class="active"><a href="notification.php">Notifications</a></li>
 					<li><a href="clipboard.php">Clipboard</a></li>
 					<li><a href="top.php">Top Formulas</a></li>
+					<li><a href="remote.php">Remote</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				<?php
@@ -67,9 +68,16 @@ session_start ();
 	<div class="container" style="width: 100%; margin-top: 70px;">
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Notifications</h1>
-			<p>Your Personal Notifications.</p>
-			<?php showNotifications();?>
+			<h1>Top Formulas</h1>
+			<p>The Best Formulas Are Here.</p>
+			<div id="formulas"></div>
+			<div class="jumbotron" id="loading">
+				<div class="row well" id="items">
+					<img class="center-image" alt="loading..."
+						src="loading.gif">
+				</div>
+			</div>
+			<?php //showFormulas(); ?>
 		</div>
 	</div>
 	<!-- /container -->
@@ -79,32 +87,74 @@ session_start ();
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	var pg = 1;
+	$(document).ready(function() {
+		ajaxCall(pg);
+	});
+
+	$(window).scroll(function() {
+	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+		   pg = pg + 1;
+		   ajaxCall(pg);
+	   }
+	});
+
+
+	count = 0;
+	function ajaxCall(page){
+		$('#loading').show();
+		$.getJSON('api/notification/notification.showall.php?apikey=tejpratap&username=' + <?php echo "'".$_COOKIE['ifiusername']."'" ?> + '&page=' + page, function(json, textStatus) {
+			$('#loading').hide();
+			try{
+				formulas = json.text;
+				// $.each(formulas, function(arrayID,formula) {
+				//             console.log(formula);
+				// });
+				for (var i = 0; i < formulas.length; i++) {
+					count++;
+					jsonObj = formulas[i];
+					// console.log(jsonObj);
+					title = jsonObj.text.title;
+					text = jsonObj.text.text;
+					package = jsonObj.text.package;
+					show = '';
+					show = show + '<div class="thumbnail">';
+					// show = show + '<h1><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
+					show = show + '<h1>' + count + ' : ' + title + '</h1>';
+					show = show + '<h5 class="bold">'+ text + '</h5>';
+					show = show + '<h5>'+ package + '</h5>';
+					show = show + '</div>';
+					prev = $('#formulas').html();
+					$('#formulas').html(prev + show);
+				}
+			}catch(err){
+				$('#loading').hide(100);
+				$('#formulas').html('<h2 class="bold">Login First</h2>');
+			}
+
+		});
+
+	}
+	</script>
 </body>
 </html>
 <?php
 function showNotifications() {
-	if ($_COOKIE ['ifiusername']) {
-		$query = mysql_query ( "SELECT * FROM `notification` WHERE username = '" . $_COOKIE ['ifiusername'] . "' ORDER BY `notification`.`index` DESC" );
-		$rows = mysql_num_rows ( $query );
-		if ($rows > 0) {
-			for($i = 0; $i < $rows; $i ++) {
-				$qarray = mysql_fetch_array ( $query );
-				echo '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
-				$JSONArray = json_decode($qarray ['text'], true);
-				$text = "By App : ".$JSONArray['package']."<br />Title : ".$JSONArray['title']."<br />Text : ".$JSONArray['text']."<br />Sub Text : ".$JSONArray['subtext'];
-				echo '<p style="font-size: 24px; padding: 1%;"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $text . "</p>";
-				echo "</div>";
-			}
+	$query = mysql_query ( "SELECT * FROM `top` ORDER BY `top`.`total_shares` DESC" );
+	for($i = 0; $i < mysql_num_rows ( $query ); $i ++) {
+		$qarray = mysql_fetch_array ( $query );
+		if ($i > 6) {
+			$jarray = json_decode ( $qarray ["formula"] , true);
+			$formula = "Trigger : " . $jarray ['action1'] . "<br />Condition 1 : " . $jarray ['condition1'] . "<br />Condition 2 : " . $jarray ['condition2'] . "<br />Action : " . $jarray ['action2'] . "<br />Condition 1 : " . $jarray ['condition3'] . "<br />Condition 2 : " . $jarray ['condition4'];
+			// print_r($jarray);
 		} else {
-			echo '<div class="alert alert-danger" role="alert">';
-			echo "<p><strong>Nothing Here,</strong> Please enable Notification Listener from home page of Ifi Andtoid App if you want to use this feature.</p>";
-			echo '</div>';
+			$formula = $qarray ["formula"];
 		}
-	} else {
-		echo "<h2 style='text-align: center;'>You are not logged in!</h2>";
-		echo '<a style="width: 100%;" class="btn btn-primary" type="button" href="login.php">
-				  Login <span class="badge">Here</span>
-				</a>';
+		echo '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
+		echo '<p style="font-size: 30px; color: #424B5A;"><span class="badge" style="font-size: 30px;">' . ($i + 1) . '</span> ' . $qarray ["name"] . '</p>';
+		echo '<p style="font-size: 20px; padding: 1%;">'. $formula .'</p>';
+		echo "</div>";
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 error_reporting ( 0 );
-require '../connection.php';
+require '../../connection.php';
 
 $name = $_GET ['name'];
 $email = $_GET ['email'];

@@ -1,6 +1,6 @@
 <?php
 error_reporting ( 0 );
-require '../connection.php';
+require '../../connection.php';
 
 $text = $_GET ['text'];
 $username = $_GET['username'];
@@ -16,7 +16,7 @@ if (! empty ( $apikey )) {
 }
 
 if ($text && $username) {
-	$query = mysql_query ( "INSERT INTO `notification`(`username`, `text`) VALUES ('$username','$text')" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
+	$query = mysql_query ( "INSERT INTO `clipboard`(`username`, `text`) VALUES ('$username','$text')" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	echo "{";
 	echo "\"status\":1";
 	echo "}";

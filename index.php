@@ -41,6 +41,7 @@ require 'connection.php';
 					<li><a href="notification.php">Notifications</a></li>
 					<li><a href="clipboard.php">Clipboard</a></li>
 					<li><a href="top.php">Top Formulas</a></li>
+					<li><a href="remote.php">Remote</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				<?php

@@ -8,11 +8,7 @@ if (! $limit) {
 }
 
 // count total pages
-if ($_GET ['q']) { // For search
-	$query = "SELECT COUNT(*) as num FROM `top` WHERE text LIKE '%$q%'";
-} else { // otherwise
-	$query = "SELECT COUNT(*) as num FROM `notification` WHERE username = '" . $_COOKIE ['ifiusername'] . "'";
-}
+$query = "SELECT COUNT(*) as num FROM `notification` WHERE username = '" . $_COOKIE ['ifiusername'] . "'";
 
 $total_pages = mysql_fetch_array ( mysql_query ( $query ) );
 $total_pages = $total_pages ['num'];

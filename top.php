@@ -42,6 +42,7 @@ require 'connection.php';
 					<li><a href="notification.php">Notifications</a></li>
 					<li><a href="clipboard.php">Clipboard</a></li>
 					<li class="active"><a href="top.php">Top Formulas</a></li>
+					<li><a href="remote.php">Remote</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				<?php
@@ -105,7 +106,7 @@ require 'connection.php';
 	count = 0;
 	function ajaxCall(page){
 		$('#loading').show();
-		$.getJSON('api/top.showall.php?apikey=tejpratap&page=' + page, function(json, textStatus) {
+		$.getJSON('api/top/top.showall.php?apikey=tejpratap&page=' + page, function(json, textStatus) {
 			$('#loading').hide();
 			try{
 				formulas = json.text;
@@ -127,13 +128,14 @@ require 'connection.php';
 					show = '';
 					show = show + '<div class="thumbnail">';
 					// show = show + '<h1><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
-					show = show + '<h1>' + count + ' : ' + name + '</h1>';
-					show = show + '<p>Trigger : '+ formulaTrigger + '</p>';
-					show = show + '<p>Condition 1 : '+ formulaCondition1 + '</p>';
-					show = show + '<p>Condition 2 : '+ formulaCondition2 + '</p>';
-					show = show + '<p>Action : '+ formulaAction + '</p>';
-					show = show + '<p>Condition 1 : '+ formulaCondition3 + '</p>';
-					show = show + '<p>Condition 2 : '+ formulaCondition4 + '</p>';
+					show = show + '<h2>' + count + ' : ' + name + '</h2>';
+					show = show + '<h5>Used By : '+ total_shares + '</h5>';
+					show = show + '<h5 class="bold">Trigger : '+ formulaTrigger + '</h5>';
+					show = show + '<h5>Condition 1 : '+ formulaCondition1 + '</h5>';
+					show = show + '<h5>Condition 2 : '+ formulaCondition2 + '</h5>';
+					show = show + '<h5 class="bold">Action : '+ formulaAction + '</h5>';
+					show = show + '<h5>Condition 1 : '+ formulaCondition3 + '</h5>';
+					show = show + '<h5>Condition 2 : '+ formulaCondition4 + '</h5>';
 					show = show + '</div>';
 					prev = $('#formulas').html();
 					$('#formulas').html(prev + show);

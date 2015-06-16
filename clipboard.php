@@ -2,6 +2,9 @@
 error_reporting ( 0 );
 require 'connection.php';
 // $websiteurl = "http://www.brainstrom.zz.mu/ifi/" // to use for calling api using file_get_contents (Using to send push notification call in clipnoard.php)
+if ($_POST ['clipText']) {
+	$insert = mysql_query ( "INSERT INTO `clipboard` (`username`, `text`) VALUES ('" . $_COOKIE ['ifiusername'] . "','" . $_POST ['clipText'] . "')" ) or die ( "Error , cannot add" );
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +46,7 @@ require 'connection.php';
 					<li><a href="notification.php">Notifications</a></li>
 					<li class="active"><a href="clipboard.php">Clipboard</a></li>
 					<li><a href="top.php">Top Formulas</a></li>
+					<li><a href="remote.php">Remote</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				<?php
@@ -77,7 +81,14 @@ require 'connection.php';
 						placeholder="Text To Store, Press Enter Key To Save" required />
 				</div>
 			</form>
-			<?php showClipboard();?>
+			<?php // showClipboard();?>
+			<div id="formulas"></div>
+			<div class="jumbotron" id="loading">
+				<div class="row well" id="items">
+					<img class="center-image" alt="loading..."
+						src="loading.gif">
+				</div>
+			</div>
 		</div>
 	</div>
 	<!-- /container -->
@@ -93,7 +104,7 @@ require 'connection.php';
       if ($id == 'sendToPhone') {
       	$('.notification').show();
 		var message = $(e.target).parent().parent().find('#push').text();
-		$('.notification').load('api/pushbotsPush.php',{
+		$('.notification').load('api/push/pushbotsPush.php',{
 		m: message, i: <?php echo "'".$_COOKIE['ifiusername']."'" ?>} ,
 			function(){
 			/* Stuff to do after the page is loaded */
@@ -101,6 +112,53 @@ require 'connection.php';
 		});
       }
     });
+	</script>
+
+	<script type="text/javascript">
+	var pg = 1;
+	$(document).ready(function() {
+		ajaxCall(pg);
+	});
+
+	$(window).scroll(function() {
+	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+		   pg = pg + 1;
+		   ajaxCall(pg);
+	   }
+	});
+
+
+	count = 0;
+	function ajaxCall(page){
+		$('#loading').show();
+		$.getJSON('api/clipboard/clipboard.showall.php?apikey=tejpratap&username=' + <?php echo "'".$_COOKIE['ifiusername']."'" ?> + '&page=' + page, function(json, textStatus) {
+			$('#loading').hide();
+			try{
+				formulas = json.text;
+				// $.each(formulas, function(arrayID,formula) {
+				//             console.log(formula);
+				// });
+				for (var i = 0; i < formulas.length; i++) {
+					count++;
+					jsonObj = formulas[i];
+					// console.log(jsonObj);
+					title = jsonObj.text;
+					show = '';
+					show = show + '<div class="thumbnail">';
+					// show = show + '<h1><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
+					show = show + '<h1>' + count + ' : ' + title + '</h1>';
+					show = show + '</div>';
+					prev = $('#formulas').html();
+					$('#formulas').html(prev + show);
+				}
+			}catch(err){
+				$('#loading').hide(100);
+				$('#formulas').html('<h2 class="bold">Login First</h2>');
+			}
+
+		});
+
+	}
 	</script>
 </body>
 </html>

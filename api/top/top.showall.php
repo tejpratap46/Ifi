@@ -1,7 +1,7 @@
 <?php
 error_reporting ( 0 );
-require ("../connection.php");
-require '../pagination/pagination.top.php';
+require '../../connection.php';
+require '../../pagination/pagination.top.php';
 
 $apikey = $_GET ['apikey'];
 

@@ -1,6 +1,6 @@
 <?php
 error_reporting ( 0 );
-require '../connection.php';
+require '../../connection.php';
 
 $email = $_GET ['email'];
 $password = $_GET ['password'];
@@ -23,6 +23,7 @@ if ($email && $password) {
 		echo "\"status\":1,";
 		echo "\"name\":\"" . $info ['name'] . "\",";
 		echo "\"email\":\"" . $info ['email'] . "\",";
+		echo "\"gcmid\":\"" . $info ['gcmid'] . "\",";
 		echo "\"password\":\"" . $info ['password'] . "\"";
 		echo "}";
 	} else {
