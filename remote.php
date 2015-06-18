@@ -159,8 +159,17 @@ require 'connection.php';
 						<p class="center">Full Volume</p>
 					</div>
 				</div>
-
 				<hr>
+				<div class="row">
+					<div class="col-sm-6 center">
+						<button id="flashLight" style="height: 100px; width: 100px;" class="btn btn-success round-button-circle"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span></button>
+						<p class="center">Flash Light</p>
+					</div>
+					<div class="col-sm-6 center">
+						<button id="openCamera" style="height: 100px; width: 100px;" class="btn btn-success round-button-circle"><span class="glyphicon glyphicon-camera" aria-hidden="true"></button>
+						<p class="center">Open Camera</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -245,6 +254,10 @@ require 'connection.php';
 			sendpush('Set+Ringer+Volume+To+lowest');
 		}else if($id == 'fullVolume'){
 			sendpush('Set+Ringer+Volume+To+full');
+		}else if($id == 'openCamera'){
+			sendpush('Press+Camera+Button');
+		}else if($id == 'flashLight'){
+			sendpush('Flashlight+On');
 		}
 	});
 

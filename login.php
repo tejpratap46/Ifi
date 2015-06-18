@@ -1,7 +1,3 @@
-<?php
-error_reporting ( 0 );
-require ("connection.php");
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,17 +20,14 @@ require ("connection.php");
 
 <body>
 	<div class="container">
-		<form class="form-signin" method="post">
+		<form class="form-signin" onsubmit="login();" id="loginForm">
 			<h1 class="form-signin-heading bold" >If I</h1>
 			<h1 class="form-signin-heading">Login</h1>
-			<label for="inputEmail" class="sr-only">Email address</label> <input
-				type="email" name="email" class="form-control"
-				placeholder="Email address" required autofocus> <label
-				for="inputPassword" class="sr-only">Password</label> <input
-				type="password" name="password" class="form-control"
-				placeholder="Password" required>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-				in</button>
+			<label for="inputEmail" class="sr-only">Email address</label>
+			<input id="email" type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</form>
 		<h3 style='text-align: center;'>To Register Use Our App</h3>
 		<div class="row thumbnail" style="position:fixed; bottom: 0; left: 0; right: 0; max-height: 100%; z-index: 2; margin: 0px;">
@@ -43,7 +36,7 @@ require ("connection.php");
 					<button style="position:fixed; right: 0;" class="btn btn-danger" onclick="$(this).parent().parent().parent().hide();">x</button>
 				</div>
 			</div>
-			<!-- <div class="row">
+			<div class="row">
 				<div class="col-sm-5" style="text-align: center; margin: 0px;">
 					<h3 style="font-weight: bold;">Download From</h3>
 				</div>
@@ -53,33 +46,29 @@ require ("connection.php");
 				<div class="col-sm-3 well" style="text-align: center; margin: 0px;">
 					<a target="_blank" href="http://www.amazon.com/Tej-Pratap-If-I/dp/B00SOP1PSO/"><h4>Amazon App Store</h4></a>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
+	<div class="notification"></div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
 <script type="text/javascript">
 	function login () {
-		$.getJSON('api/user/login.php?apikey=tejpratap&email=' +  + 'password=', {param1: 'value1'}, function(json, textStatus) {
-			
+		email = $('#email').val();
+		password = $('#password').val();
+		$('.notification').text('Loading...').show(100);
+		$.getJSON('api/user/login.php?apikey=tejpratap', {email: email, password: password}, function(json, textStatus) {
+			if (json.status == 1) {
+				$.cookie('ifiusername', json.email, { expires: 365, path: '/' });
+				window.location.href = "index.php";
+				$('.notification').hide(100);
+			}else{
+				$('.notification').stop().text('Error : ' + json.error).show(100).delay(3000).hide(100);
+			}
 		});
+		return false;
 	}
+	$('#loginForm').submit(function(){return false;});
 </script>
 </html>
-<?php
-$email = $_POST ['email'];
-$password = $_POST ['password'];
-
-if (! empty ( $email ) || ! empty ( $password )) {
-	$query = mysql_query ( "SELECT * FROM user WHERE email = '$email' AND password = '$password'" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
-	if (mysql_num_rows ( $query ) == 1) {
-		$cookie_name = "ifiusername";
-		$cookie_value = $email;
-		setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
-		header ( "Location: index.php" );
-	} else {
-		echo ("<p style='text-align: center; color: red;'>!Invalid email or password</p>");
-	}
-}
-?>
