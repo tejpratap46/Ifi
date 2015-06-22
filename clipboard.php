@@ -26,7 +26,7 @@ if ($_POST ['clipText']) {
 <link href="navbar-fixed-top.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="jumbotron">
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
@@ -68,21 +68,26 @@ if ($_POST ['clipText']) {
 			<!--/.nav-collapse -->
 		</div>
 	</nav>
-	<div class="notification">Loading...</div>
-	<div class="container" style="width: 100%; margin-top: 70px;">
+	<div class="container" style="width: 100%;">
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Clipboard</h1>
-			<p>Your Personal Clipboard.</p>
-			<form method="post">
-				<div class="input-group" style="padding: 1%;">
-					<span class="input-group-addon">Add This Text Also</span> <input
-						name="clipText" type="text" class="form-control"
-						placeholder="Text To Store, Press Enter Key To Save" required />
-				</div>
-			</form>
+			<div class="row center">
+				<h1>Clipboard</h1>
+				<p>Your Personal Clipboard.</p>
+			</div>
+			<div class="row thumbnail">
+				<form method="post">
+					<div class="input-group" style="padding: 1%;">
+						<span class="input-group-addon">Add This Text Also</span> <input
+							name="clipText" type="text" class="form-control"
+							placeholder="Text To Store, Press Enter Key To Save" required />
+					</div>
+				</form>
+			</div>
 			<?php // showClipboard();?>
-			<div id="formulas"></div>
+			<div class="row">
+				<div id="formulas" class="list-group row"></div>
+			</div>
 			<div class="jumbotron" id="loading">
 				<div class="row well" id="items">
 					<img class="center-image" alt="loading..."
@@ -91,6 +96,7 @@ if ($_POST ['clipText']) {
 			</div>
 		</div>
 	</div>
+	<div class="notification"></div>
 	<!-- /container -->
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -98,22 +104,6 @@ if ($_POST ['clipText']) {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script type='text/javascript'>
-	$(document).click(function(e) {
-      $id = $(e.target).attr('id');
-      if ($id == 'sendToPhone') {
-      	$('.notification').show();
-		var message = $(e.target).parent().parent().find('#push').text();
-		$('.notification').load('api/push/pushbotsPush.php',{
-		m: message, i: <?php echo "'".$_COOKIE['ifiusername']."'" ?>} ,
-			function(){
-			/* Stuff to do after the page is loaded */
-			$('.notification').stop().text('Sent To Phone').fadeIn(400).delay(3000).fadeOut(400);
-		});
-      }
-    });
-	</script>
-
 	<script type="text/javascript">
 	var pg = 1;
 	$(document).ready(function() {
@@ -126,7 +116,6 @@ if ($_POST ['clipText']) {
 		   ajaxCall(pg);
 	   }
 	});
-
 
 	count = 0;
 	function ajaxCall(page){
@@ -143,11 +132,20 @@ if ($_POST ['clipText']) {
 					jsonObj = formulas[i];
 					// console.log(jsonObj);
 					title = jsonObj.text;
+					index = jsonObj.index;
 					show = '';
-					show = show + '<div class="thumbnail">';
-					// show = show + '<h1><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
-					show = show + '<h1>' + count + ' : ' + title + '</h1>';
-					show = show + '</div>';
+					show = show + '<a class="list-group-item row">';
+						show = show + '<blockquote>';
+							show = show + '<div class="row">';
+								show = show + '<h2>' + count + ' : ' + title + '</h2>';
+							show = show + '</div>';
+						show = show + '</blockquote>';
+						show = show + '<hr>';
+						show = show + '<div class="row center">';
+							show = show + '<div class="col-sm-6"><button class="btn btn-danger full-width" data-button="delete" data-index="'+index+'">Delete</button></div>';
+							show = show + '<div class="col-sm-6"><button class="btn btn-primary full-width" data-button="push" data-text="'+title+'">Push</button></div>';
+						show = show + '</div>';
+					show = show + '</a>';
 					prev = $('#formulas').html();
 					$('#formulas').html(prev + show);
 				}
@@ -155,47 +153,35 @@ if ($_POST ['clipText']) {
 				$('#loading').hide(100);
 				$('#formulas').html('<h2 class="bold">Login First</h2>');
 			}
-
 		});
-
 	}
+
+	$(document).click(function(event) {
+		button = $(event.target).attr('data-button');
+		if (button == "delete") {
+			index = $(event.target).attr('data-index');
+			$('.notification').text('Loading...').show('fast');
+			$.getJSON('api/clipboard/clipboard.remove.php?apikey=tejpratap&index=' + index, function(json, textStatus) {
+				$('.notification').hide('fast');
+				if (json.status == 1) {
+					$('.notification').stop().text('Loading...').show('fast').delay(3000).hide('fast');
+					$(event.target).parent().parent().parent().hide('fast');
+				}else{
+					$('.notification').stop().text('Error : ' + json.error).show('fast').delay(3000).hide('fast');
+				}
+			});
+		}else if(button == "push"){
+			text = $(event.target).attr('data-text');
+			$('.notification').text('Loading...').show(100);
+			$.getJSON('api/push/pushnotification.php?apikey=tejpratap&email=' + <?php echo "'".$_COOKIE['ifiusername']."'" ?> + '&message=' + text, function(json, textStatus) {
+				if(json.success == 1){
+					$('.notification').stop().text('Message Sent.').show(100).delay(3000).hide(100);
+				}else{
+					$('.notification').stop().text('Not Sent').show(100).delay(3000).hide(100);
+				}
+			});
+		}
+	});
 	</script>
 </body>
 </html>
-<?php
-function showClipboard() {
-	if ($_COOKIE ['ifiusername']) {
-		if ($_POST ['clipText']) {
-			$insert = mysql_query ( "INSERT INTO `clipboard` (`username`, `text`) VALUES ('" . $_COOKIE ['ifiusername'] . "','" . $_POST ['clipText'] . "')" ) or die ( "Error , cannot add" );
-				// echo '<a href="api/pushbotsPush.php?message='.$_POST ['clipText'].'&gcmid='.$pushArray['gcmid'].'">link</a>';
-				// $res = file_get_contents('http://www.brainstrom.zz.mu/ifi/api/pushbotsPush.php?message='.$_POST ['clipText'].'&gcmid='.$pushArray['gcmid']);
-				// echo $res;
-		}
-		
-		$query = mysql_query ( "SELECT * FROM `clipboard` WHERE username = '" . $_COOKIE ['ifiusername'] . "' ORDER BY `clipboard`.`index` DESC" );
-		$rows = mysql_num_rows ( $query );
-		if ($rows > 0) {
-			for($i = 0; $i < $rows; $i ++) {
-				$qarray = mysql_fetch_array ( $query );
-				echo '<div class="row" colalert alert-info" role="alert" style="background-color: #F8F8F8;">';
-				echo '<div class="col-md-10">';
-				echo '<p style="font-size: 24px; padding: 1%;" id="push"><span class="badge" style="font-size: 24px;">' . ($i + 1) . '</span> ' . $qarray ['text'] . "</p>";
-				echo '</div>';
-				echo '<div class="col-md-2">';
-				echo '<button style="height: 70px; width: 100%; text-align: center;" class="btn btn-primary" id="sendToPhone">Send To Phone</button>';
-				echo '</div>';
-				echo '</div>';
-			}
-		} else {
-			echo '<div class="alert alert-danger" role="alert">';
-			echo "<p><strong>Nothing Here,</strong> Please enable Clipboard Listener from home page of Ifi Andtoid App if you want to use this feature.</p>";
-			echo '</div>';
-		}
-	} else {
-		echo "<h2 style='text-align: center;'>You are not logged in!</h2>";
-		echo '<a style="width: 100%;" class="btn btn-primary" type="button" href="login.php">
-				  Login <span class="badge">Here</span>
-				</a>';
-	}
-}
-?>

@@ -1,3 +1,8 @@
+<?php
+if (isset($_COOKIE['ifiusername'])) {
+	header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +23,12 @@
 <link href="signin.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="jumbotron">
 	<div class="container">
-		<form class="form-signin" onsubmit="login();" id="loginForm">
-			<h1 class="form-signin-heading bold" >If I</h1>
+		<div class="row center">
+			<a href="index.php"><h1 class="form-signin-heading bold" >IF I</h1></a>
+		</div>
+		<form class="form-signin thumbnail" id="loginForm">
 			<h1 class="form-signin-heading">Login</h1>
 			<label for="inputEmail" class="sr-only">Email address</label>
 			<input id="email" type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
@@ -69,6 +76,10 @@
 		});
 		return false;
 	}
-	$('#loginForm').submit(function(){return false;});
+	
+	$('#loginForm').submit(function(){
+		login();
+		return false;
+	});
 </script>
 </html>

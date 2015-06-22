@@ -11,19 +11,12 @@ require 'connection.php';
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="favicon.ico">
-
 <title>If i :: Top Formulas</title>
-
-<!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
-
-<!-- Custom styles for this template -->
 <link href="navbar-fixed-top.css" rel="stylesheet">
 </head>
-
-<body>
-	<!-- Fixed navbar -->
+<body class="jumbotron">
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -61,18 +54,31 @@ require 'connection.php';
 				?>
 				</ul>
 			</div>
-			<!--/.nav-collapse -->
 		</div>
 	</nav>
-
-	<div class="container" style="width: 100%; margin-top: 70px;">
-		<!-- Main component for a primary marketing message or call to action -->
+	<div class="container" style="width: 100%;">
 		<div class="jumbotron">
-			<h1>Top Formulas</h1>
-			<p>The Best Formulas Are Here.</p>
-			<div id="formulas">
-				
+			<div class="row center">
+				<h1>Top Formulas</h1>
+				<p>The Best Formulas Are Here.</p>
 			</div>
+			<div class="row thumbnail">
+				<form action="topsearch.php">
+					<div class="input-group input-group-lg">
+					  	<span class="input-group-addon" id="sizing-addon1">#</span>
+					  	<input name="q" type="text" class="form-control" placeholder="Search" aria-describedby="sizing-addon1">
+					</div>
+				</form>
+			</div>
+			<div class="row">
+				<button id="toggleTags" class="btn btn-success"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Show Tags</button>
+				<div id="tags" class="btn-group btn-group-justified hide" role="group"></div>
+			</div>
+			<hr>
+			<div class="row">
+				<div id="formulas" class="list-group row"></div>
+			</div>
+
 			<div class="jumbotron" id="loading">
 				<div class="row well" id="items">
 					<img class="center-image" alt="loading..."
@@ -82,12 +88,7 @@ require 'connection.php';
 			<?php //showFormulas(); ?>
 		</div>
 	</div>
-	<!-- /container -->
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	var pg = 1;
@@ -102,7 +103,6 @@ require 'connection.php';
 	   }
 	});
 
-
 	count = 0;
 	function ajaxCall(page){
 		$('#loading').show();
@@ -113,59 +113,58 @@ require 'connection.php';
 				// $.each(formulas, function(arrayID,formula) {
 				//             console.log(formula);
 				// });
-				for (var i = 0; i < formulas.length; i++) {
-					count++;
-					jsonObj = formulas[i];
-					// console.log(jsonObj);
-					name = jsonObj.name;
-					total_shares = jsonObj.total_shares;
-					formulaTrigger = jsonObj.formula.action1;
-					formulaCondition1 = jsonObj.formula.condition1;
-					formulaCondition2 = jsonObj.formula.condition2;
-					formulaAction = jsonObj.formula.action2;
-					formulaCondition3 = jsonObj.formula.condition3;
-					formulaCondition4 = jsonObj.formula.condition4;
-					show = '';
-					show = show + '<div class="thumbnail">';
-					// show = show + '<h1><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
-					show = show + '<h2>' + count + ' : ' + name + '</h2>';
-					show = show + '<h5>Used By : '+ total_shares + '</h5>';
-					show = show + '<h5 class="bold">Trigger : '+ formulaTrigger + '</h5>';
-					show = show + '<h5>Condition 1 : '+ formulaCondition1 + '</h5>';
-					show = show + '<h5>Condition 2 : '+ formulaCondition2 + '</h5>';
-					show = show + '<h5 class="bold">Action : '+ formulaAction + '</h5>';
-					show = show + '<h5>Condition 1 : '+ formulaCondition3 + '</h5>';
-					show = show + '<h5>Condition 2 : '+ formulaCondition4 + '</h5>';
-					show = show + '</div>';
-					prev = $('#formulas').html();
-					$('#formulas').html(prev + show);
+				if (formulas.length > 0) {
+					for (var i = 0; i < formulas.length; i++) {
+						count++;
+						jsonObj = formulas[i];
+						// console.log(jsonObj);
+						name = jsonObj.name;
+						total_shares = jsonObj.total_shares;
+						formulaTrigger = jsonObj.formula.action1;
+						formulaCondition1 = jsonObj.formula.condition1;
+						formulaCondition2 = jsonObj.formula.condition2;
+						formulaAction = jsonObj.formula.action2;
+						formulaCondition3 = jsonObj.formula.condition3;
+						formulaCondition4 = jsonObj.formula.condition4;
+						show = '';
+						show = show + '<a class="list-group-item row">';
+							show = show + '<blockquote>';
+								show = show + '<h2>' + count + ' : ' + name + '</h2>';
+								show = show + '<h5>Used By : '+ total_shares + '</h5>';
+								show = show + '<h5 class="bold">Trigger : '+ formulaTrigger + '</h5>';
+								show = show + '<h5>Condition 1 : '+ formulaCondition1 + '</h5>';
+								show = show + '<h5>Condition 2 : '+ formulaCondition2 + '</h5>';
+								show = show + '<h5 class="bold">Action : '+ formulaAction + '</h5>';
+								show = show + '<h5>Condition 1 : '+ formulaCondition3 + '</h5>';
+								show = show + '<h5>Condition 2 : '+ formulaCondition4 + '</h5>';
+							show = show + '</blockquote>';
+						show = show + '</a>';
+						prev = $('#formulas').html();
+						$('#formulas').html(prev + show);
+					}
+				}else{
+					$('#formulas').html('<h2>Sorry, We dont have anything for this yet<h2>');
 				}
 			}catch(err){
 				$('#loading').hide();
 			}
-			
 		});
-
 	}
+
+	$('#toggleTags').click(function(event) {
+		$.getJSON('api/top/top.tags.php', function(json, textStatus) {
+			show = '';
+			tags = json.tags;
+			for (var i = 0; i < tags.length; i++) {
+				tag = tags[i];
+				show += '<div class="btn-group" role="group">';
+				show += '<a href="topsearch.php?q=wifi" class="btn btn-primary">'+ tag +'</a>';
+				show += '</div>';
+			}
+			$('#tags').html(show);
+			$('#tags').toggle('slow');
+		});
+	});
 	</script>
 </body>
 </html>
-<?php
-function showFormulas() {
-	$query = mysql_query ( "SELECT * FROM `top` ORDER BY `top`.`total_shares` DESC" );
-	for($i = 0; $i < mysql_num_rows ( $query ); $i ++) {
-		$qarray = mysql_fetch_array ( $query );
-		if ($i > 6) {
-			$jarray = json_decode ( $qarray ["formula"] , true);
-			$formula = "Trigger : " . $jarray ['action1'] . "<br />Condition 1 : " . $jarray ['condition1'] . "<br />Condition 2 : " . $jarray ['condition2'] . "<br />Action : " . $jarray ['action2'] . "<br />Condition 1 : " . $jarray ['condition3'] . "<br />Condition 2 : " . $jarray ['condition4'];
-			// print_r($jarray);
-		} else {
-			$formula = $qarray ["formula"];
-		}
-		echo '<div class="alert alert-info" role="alert" style="background-color: #F8F8F8;">';
-		echo '<p style="font-size: 30px; color: #424B5A;"><span class="badge" style="font-size: 30px;">' . ($i + 1) . '</span> ' . $qarray ["name"] . '</p>';
-		echo '<p style="font-size: 20px; padding: 1%;">'. $formula .'</p>';
-		echo "</div>";
-	}
-}
-?>

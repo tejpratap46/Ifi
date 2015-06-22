@@ -22,7 +22,7 @@ require 'connection.php';
 <link href="navbar-fixed-top.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="jumbotron">
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
@@ -65,12 +65,16 @@ require 'connection.php';
 		</div>
 	</nav>
 
-	<div class="container" style="width: 100%; margin-top: 70px;">
+	<div class="container" style="width: 100%;">
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Top Formulas</h1>
-			<p>The Best Formulas Are Here.</p>
-			<div id="formulas"></div>
+			<div class="row center">
+				<h1>Top Formulas</h1>
+				<p>The Best Formulas Are Here.</p>
+			</div>
+			<div class="row">
+				<div id="formulas" class="list-group row"></div>
+			</div>
 			<div class="jumbotron" id="loading">
 				<div class="row well" id="items">
 					<img class="center-image" alt="loading..."
@@ -114,17 +118,17 @@ require 'connection.php';
 				for (var i = 0; i < formulas.length; i++) {
 					count++;
 					jsonObj = formulas[i];
-					// console.log(jsonObj);
 					title = jsonObj.text.title;
 					text = jsonObj.text.text;
 					package = jsonObj.text.package;
 					show = '';
-					show = show + '<div class="thumbnail">';
-					// show = show + '<h1><span class="badge" style="font-size: 40px;">' + count + '</span> ' + name + '</h1>';
-					show = show + '<h1>' + count + ' : ' + title + '</h1>';
-					show = show + '<h5 class="bold">'+ text + '</h5>';
-					show = show + '<h5>'+ package + '</h5>';
-					show = show + '</div>';
+					show = show + '<a class="list-group-item row">';
+						show = show + '<blockquote>';
+							show = show + '<h2>' + count + ' : ' + title + '</h2>';
+							show = show + '<h5 class="bold">'+ text + '</h5>';
+							show = show + '<h5>'+ package + '</h5>';
+						show = show + '</blockquote>';
+					show = show + '</a>';
 					prev = $('#formulas').html();
 					$('#formulas').html(prev + show);
 				}

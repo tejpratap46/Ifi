@@ -17,8 +17,7 @@ setcookie("ifiusername", "", time() - (86400 * 30), "/");
 <!-- Custom styles for this template -->
 <link href="cover.css" rel="stylesheet">
 
-
-<body>
+<body class="jumbotron">
 	<div class="site-wrapper">
 		<div class="site-wrapper-inner">
 			<div class="cover-container">

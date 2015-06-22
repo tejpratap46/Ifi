@@ -16,10 +16,10 @@ if (! empty ( $apikey )) {
 }
 
 if ($name && $formula) {
-	$qs = mysql_query ( "SELECT COUNT(*) as num FROM top WHERE name = '" . $name . "'" );
+	$qs = mysql_query ( "SELECT COUNT(*) as num FROM top WHERE name = '" . $name . "'" )) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	$qsa = mysql_fetch_array ( $qs );
 	if ($qsa ['num'] > 0) {
-		$countQ = mysql_query("SELECT total_shares FROM top WHERE name = '" . $name . "'");
+		$countQ = mysql_query("SELECT total_shares FROM top WHERE name = '" . $name . "'")) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 		$countA = mysql_fetch_array($countQ);
 		$num = ($countA ['total_shares'] + 1);
 		$query = mysql_query ( "UPDATE `top` SET `total_shares`='$num' WHERE name = '" . $name . "'" );

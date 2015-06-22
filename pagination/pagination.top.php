@@ -9,7 +9,8 @@ if (! $limit) {
 
 // count total pages
 if ($_GET ['q']) { // For search
-	$query = "SELECT COUNT(*) as num FROM `top` WHERE name LIKE '%$q%' OR WHERE formula LIKE '%$q%'";
+	$q = $_GET ['q'];
+	$query = "SELECT COUNT(*) as num FROM `top` WHERE name LIKE '%$q%' OR formula LIKE '%$q%'";
 } else { // otherwise
 	$query = "SELECT COUNT(*) as num FROM `top`";
 }

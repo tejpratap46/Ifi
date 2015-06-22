@@ -19,7 +19,8 @@ require 'connection.php';
 <!-- Custom styles for this template -->
 <link href="navbar-fixed-top.css" rel="stylesheet">
 </head>
-<body>
+
+<body class="jumbotron">
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
@@ -61,11 +62,13 @@ require 'connection.php';
 			<!--/.nav-collapse -->
 		</div>
 	</nav>
-	<div class="container" style="width: 100%; margin-top: 70px;">
+	<div class="container" style="width: 100%;">
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Remote</h1>
-			<p>Control Your Phone From Here.</p>
+			<div class="row center">
+				<h1>Remote</h1>
+				<p>Control Your Phone From Here.</p>
+			</div>
 			<div class="row" id="toggles">
 				<hr>
 				<div class="row thumbnail">
@@ -76,11 +79,11 @@ require 'connection.php';
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-md-6 center">
+					<div class="col-sm-6 center">
 						<button id="refresh" style="height: 100px; width: 100px;" class="round-button-circle btn btn-primary"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span></button>
 						<p class="center">Refresh</p>
 					</div>
-					<div class="col-md-6 center">
+					<div class="col-sm-6 center">
 						<button id="ringAlarm" style="height: 100px; width: 100px;" class="btn btn-danger round-button-circle"><span class="glyphicon glyphicon-bell" aria-hidden="true"></button>
 						<p class="center">Ring Alarm</p>
 					</div>
@@ -88,19 +91,19 @@ require 'connection.php';
 				<hr>
 				<div class="thumbnail">
 					<div class="row">
-						<div class="col-md-4 center">
+						<div class="col-sm-4 center">
 							<h2 class="ellipsis">WiFi</h2>
 							<div class="row">
 								<input type="checkbox" id="wifi">
 							</div>
 						</div>
-						<div class="col-md-4 center">
+						<div class="col-sm-4 center">
 							<h2 class="ellipsis">Bluetooth</h2>
 							<div class="row">
 								<input type="checkbox" id="bluetooth">
 							</div>
 						</div>
-						<div class="col-md-4 center">
+						<div class="col-sm-4 center">
 							<h2 class="ellipsis">Silent</h2>
 							<div class="row">
 								<input type="checkbox" id="silent">
@@ -109,19 +112,19 @@ require 'connection.php';
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-md-4 center">
+						<div class="col-sm-4 center">
 							<h2 class="ellipsis">Pocket Data</h2>
 							<div class="row">
 								<input type="checkbox" id="data">
 							</div>
 						</div>
-						<div class="col-md-4 center">
+						<div class="col-sm-4 center">
 							<h2 class="ellipsis">Auto-Rotation</h2>
 							<div class="row">
 								<input type="checkbox" id="rotation">
 							</div>
 						</div>
-						<div class="col-md-4 center">
+						<div class="col-sm-4 center">
 							<h2 class="ellipsis">Airplane Mode</h2>
 							<div class="row">
 								<input type="checkbox" id="airplane">

@@ -2,6 +2,7 @@
 error_reporting ( 0 );
 require '../../connection.php';
 
+$formula = $_GET ['formula'];
 $index = $_GET ['index'];
 $apikey = $_GET ['apikey'];
 
@@ -14,12 +15,12 @@ if (! empty ( $apikey )) {
 	die ( "{\"status\":0," . "\"error\":\"invalid apikey\"}" );
 }
 
-if ($index) {
-	$query = mysql_query ( "DELETE FROM `clipboard` WHERE `index`='".$index."'" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
+if ($index && $formula) {
+	$qs = mysql_query ( "DELETE FROM top WHERE `index` = '" . $index . "'" )) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	echo "{";
 	echo "\"status\":1";
 	echo "}";
 } else {
-	die ( "{\"status\":0," . "\"error\":\"Enter index\"}" );
+	die ( "{\"status\":0," . "\"error\":\"Enter name, email, password\"}" );
 }
 ?>

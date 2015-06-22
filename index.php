@@ -16,12 +16,13 @@ require 'connection.php';
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="navbar-fixed-top.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="jumbotron">
 	<!-- Fixed navbar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
@@ -64,55 +65,96 @@ require 'connection.php';
 		</div>
 	</nav>
 
-	<div class="container" style="width: 100%; margin-top: 70px;">
+	<div class="container" style="width: 100%;">
 		<!-- Main component for a primary marketing message or call to action -->
-		<div class="jumbotron">
+		<div class="row center">
 			<h1>If I</h1>
 			<p>Find What Else You Have To Control Your Device.</p>
 		</div>
-		<div class="jumbotron">
-			<div class="row">
-				<div class="col-md-4" style="text-align: center;">
-					<img class="img-circle" src="notification.png" alt="Notifications"
-						style="width: 140px; height: 140px;">
-					<h2>Notification</h2>
-					<p>Access Your Notifications Direct From Your Phone.</p>
-					<p>
-						<a class="btn btn-default" href="notification.php" role="button">View
-							»</a>
-					</p>
+		<hr>
+		<div class="row">
+			<div class="list-group" id="random"></div>
+		</div>
+		<hr>
+		<div class="row center">
+			<a href="notification.php">
+				<div class="col-sm-3">
+			  		<img src="notification.png" alt="Notifications">
+			    	<h4 class="list-group-item-heading">Notifications</h4>
+			    	<p class="list-group-item-text">Access Your Notifications Direct From Your Phone.</p>
 				</div>
-				<!-- /.col-lg-4 -->
-				<div class="col-md-4" style="text-align: center;">
-					<img class="img-circle" src="top.jpg" alt="Top Formulas"
-						style="width: 140px; height: 140px;">
-					<h2>Top Formulas</h2>
-					<p>The Formulas That Are In Hot All Over The Time.</p>
-					<p>
-						<a class="btn btn-default" href="top.php" role="button">View »</a>
-					</p>
+			</a>
+			<a href="top.php">
+				<div class="col-sm-3">
+			  		<img src="top.png" alt="Top Formulas">
+			    	<h4 class="list-group-item-heading">Top Formulas</h4>
+			    	<p class="list-group-item-text">The Formulas That Are In Hot All Over The Time.</p>
 				</div>
-				<!-- /.col-lg-4 -->
-				<div class="col-md-4" style="text-align: center;">
-					<img class="img-circle" src="clipboard.png" alt="Clipboard"
-						style="width: 140px; height: 140px;">
-					<h2>Clipboard</h2>
-					<p>View Your Clipboard History From Here</p>
-					<p>
-						<a class="btn btn-default" href="clipboard.php" role="button">View
-							»</a>
-					</p>
+			</a>
+			<a href="clipboard.php">
+				<div class="col-sm-3">
+			  		<img src="clipboard.png" alt="Clipboard">
+			    	<h4 class="list-group-item-heading">Clipboard</h4>
+			    	<p class="list-group-item-text">View Your Clipboard History From Here.</p>
 				</div>
-				<!-- /.col-lg-4 -->
-			</div>
+			</a>
+			<a href="remote.php">
+				<div class="col-sm-3">
+			  		<img src="remote.png" alt="Remote">
+			    	<h4 class="list-group-item-heading">Remote</h4>
+			    	<p class="list-group-item-text">Control Your Phone From Here Via Internet.</p>
+				</div>
+			</a>
 		</div>
 	</div>
+	<div class="notification"></div>
 	<!-- /container -->
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		getRandom();
+	});
+
+	function getRandom () {
+		$('.notification').text('Loading...').show('fast');
+		jQuery.getJSON('api/top/top.random.php?apikey=tejpratap&n=1', function(json, textStatus) {
+		  $('.notification').hide('fast');
+			formulas = json.text;
+			for (var i = 0; i < formulas.length; i++) {
+				jsonObj = formulas[i];
+				// console.log(jsonObj);
+				name = jsonObj.name;
+				index = jsonObj.index;
+				total_shares = jsonObj.total_shares;
+				formulaTrigger = jsonObj.formula.action1;
+				formulaCondition1 = jsonObj.formula.condition1;
+				formulaCondition2 = jsonObj.formula.condition2;
+				formulaAction = jsonObj.formula.action2;
+				formulaCondition3 = jsonObj.formula.condition3;
+				formulaCondition4 = jsonObj.formula.condition4;
+				show = '';
+				show = show + '<a href="formula.php?i='+ index +'" class="list-group-item">';
+					show = show + '<blockquote class="center bold">';
+						show = show + '<h2>' + name + '</h2>';
+						show = show + '<p class="list-group-item-text">used by : '+total_shares+'</p>';
+						// show = show + '<h5>Used By : '+ total_shares + '</h5>';
+						// show = show + '<h5 class="bold">Trigger : '+ formulaTrigger + '</h5>';
+						// show = show + '<h5>Condition 1 : '+ formulaCondition1 + '</h5>';
+						// show = show + '<h5>Condition 2 : '+ formulaCondition2 + '</h5>';
+						// show = show + '<h5 class="bold">Action : '+ formulaAction + '</h5>';
+						// show = show + '<h5>Condition 1 : '+ formulaCondition3 + '</h5>';
+						// show = show + '<h5>Condition 2 : '+ formulaCondition4 + '</h5>';
+					show = show + '</blockquote>';
+				show = show + '</a>';
+				show = show + '<button class="btn btn-primary bold full-width" onclick="getRandom();">Next</button>';
+				$('#random').html(show);
+			}
+		});
+	}
+	</script>
 </body>
 </html>
