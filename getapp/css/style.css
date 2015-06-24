@@ -1,13 +1,11 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
+.inline {
+	display: inline;
+}
+
 html, body{
   	font-family: 'Open Sans', sans-serif;
     font-size: 100%;
-  	 background: #FFf;
+  	background: #FFf;
 }
 body a{
 	transition:0.5s all;
@@ -18,7 +16,7 @@ body a{
 }
 /*-----start-header----*/
 .header{
-	background: #2ABF5E;
+	background: #1C5FA6;
 }
 .logo{
 	float: left;
@@ -36,7 +34,7 @@ body a{
 /*----navbar-nav----*/
 .top-header{
 	padding: 0.5em 0em;
-	background: #2ABF5E;
+	background: #1C5FA6;
 	position: relative;
 	width: 77%;
 	margin: 0 auto;
@@ -181,8 +179,9 @@ nav a#pull {
 }
 /*----- banner -----*/
 .banner{
-	background:url(../images/bg.jpg) no-repeat 0px 0px;
+	background:#1C5FA6;
 	background-size:cover;
+	margin-top: 100px;
 	min-height: 700px;
 	position:relative;
 }
@@ -223,7 +222,7 @@ text-align: right;
 	background:#fff;
 }
 .gallery-head h3 {
-	color: #2ABF5E;
+	color: #1C5FA6;
 	font-weight: 700;
 	font-size: 2.8em;
 	margin: 0;
@@ -251,8 +250,8 @@ text-align: right;
 	margin-bottom: 4em;
 }
 /******************/
-#feature {
-	background: #2ABF5E;
+#features {
+	background: #1C5FA6;
 	padding:3em 0 0em 0em;
 }
 .test-monials h3{
@@ -264,7 +263,7 @@ text-align: right;
 	margin-bottom: 1em;
 	
 }
-#feature h3 {
+#features h3 {
 	text-align: center;
 	font-size: 3.5em;
 	text-transform: uppercase;
@@ -323,7 +322,7 @@ a.review-btn{
 	color:#fff;
 	}
 /*-----Reviews---------*/
-#reviews {
+#reviewes {
 padding: 4em 0 4.5em 0;
 }
 .review_grid {
@@ -337,7 +336,7 @@ padding: 4em 0 4.5em 0;
 	-moz-border-radius: 50%;
 }
 .review-img1 img{
-	border:6px solid#2ABF5E;
+	border:6px solid#1C5FA6;
 }
 .review-img2 img{
 	border:6px solid#F2BA13;
@@ -365,7 +364,7 @@ margin-top: 4em;
 	font-weight:600;
 }
 .review-head h3{
-	color: #2ABF5E;
+	color: #1C5FA6;
 	font-weight: 700;
 	font-size:3em;
 	margin: 0;
@@ -390,7 +389,7 @@ margin-top: 4em;
 	border-radius: 0.4em;
 	-moz-border-radius: 0.4em;
 	-o-border-radius: 0.4em;
-	background:#2ABF5E;
+	background:#1C5FA6;
 	font-weight: 700;
 	width:23%;
 }
@@ -402,7 +401,7 @@ margin-top: 4em;
 /*--- Slider Part Starts Here ----*/
 /*------------------ Slider Part starts Here----------*/
 div#screenhot{
-	background:#2ABF5E;
+	background:#1C5FA6;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-o-background-size: cover;
@@ -455,7 +454,7 @@ div#demo {
 	border-radius: 0.4em;
 	-moz-border-radius: 0.4em;
 	-o-border-radius: 0.4em;
-	background:#2ABF5E;
+	background:#1C5FA6;
 	font-weight: 700;
 	width:45%;
 }
@@ -485,7 +484,7 @@ text-align: left;
 	font-family: 'Open Sans', sans-serif;
 }
 .demo-head h3 {
-	color: #2ABF5E;
+	color: #1C5FA6;
 	font-weight: 700;
 	font-size:3em;
 	margin: 0;
@@ -516,7 +515,7 @@ float:right;
 	width:40%;
 }
 .download_left h3,.download_right h3 {
-	color: #2ABF5E;
+	color: #1C5FA6;
 	font-weight: 700;
 	font-size: 2.6em;
 	margin: 0;
@@ -549,7 +548,7 @@ float:right;
 	border-radius: 0.4em;
 	-moz-border-radius: 0.4em;
 	-o-border-radius: 0.4em;
-	background:#2ABF5E;
+	background:#1C5FA6;
 	font-weight: 700;
 	width:60%;
 }
@@ -565,7 +564,7 @@ float:right;
 /*--contact--*/
 .contact{
 	padding: 3.3em 0 4em 0;
-	background: #2ABF5E;
+	background: #1C5FA6;
 }
 .contact h3{
 	text-align: center;
@@ -638,7 +637,7 @@ p.comment-form-author {
 	border-radius: 0.4em;
 	-moz-border-radius: 0.4em;
 	-o-border-radius: 0.4em;
-	background: #2ABF5E;
+	background: #1C5FA6;
 	font-weight: 700;
 	width:37%;
 	outline: none;
@@ -703,8 +702,8 @@ p.comment-form-author {
 	.top-header {
 	width: 89%;
 	}
-	#feature {
-	background: #2ABF5E;
+	#features {
+	background: #1C5FA6;
 	padding: 4em 0 0em 0em;
 	}
 	
@@ -713,8 +712,8 @@ p.comment-form-author {
 	.top-header {
 	width: 89%;
 	}
-	#feature {
-	background: #2ABF5E;
+	#features {
+	background: #1C5FA6;
 	padding: 4em 0 0em 0em;
 	}
 	
@@ -722,13 +721,13 @@ p.comment-form-author {
 @media(max-width:1280px){
 	.top-nav ul li a {
 	padding: 0px 0.2em;
-	color:#2ABF5E;
+	color:#1C5FA6;
 	}
 	.logo {
 	margin-top: 1.2em;
 	}
 	.banner {
-	background: url(../images/bg.jpg) no-repeat 0px 0px;
+	background: #1C5FA6;
 	background-size: cover;
 	min-height: 594px;
 	}
@@ -740,7 +739,7 @@ p.comment-form-author {
 	font-weight: 600;
 	width: 66%;
 	}
-	#feature h3 {
+	#features h3 {
 	text-align: center;
 	font-size: 3.2em;
 	}
@@ -771,7 +770,7 @@ p.comment-form-author {
 	font-weight: 600;
 	width: 66%;
 	}
-	#feature h3 {
+	#features h3 {
 	text-align: center;
 	font-size: 3.2em;
 	}
@@ -796,11 +795,11 @@ p.comment-form-author {
 	.gallery-head h3 {
 	font-size: 2.4em;
 	}
-	#feature {
-	background: #2ABF5E;
+	#features {
+	background: #1C5FA6;
 	padding: 2.5em 0 0em 0em;
 	}
-	#feature h3 {
+	#features h3 {
 	font-size: 3em;
 	margin-bottom: 1.5em;
 	}
@@ -893,10 +892,10 @@ p.comment-form-author {
 	margin-top: 0em;
 	text-align: center;
 	}
-	#feature {
+	#features {
 	padding: 2em 0 0em 0em;
 	}
-	#feature h3 {
+	#features h3 {
 	font-size: 2.7em;
 	margin-bottom: 0.6em;
 	}
@@ -922,7 +921,7 @@ p.comment-form-author {
 	.review-btn {
 	width: 35%;
 	}
-	div#reviews {
+	div#reviewes {
 	padding: 3em 0 3em 0;
 	}
 	.review-text {
@@ -939,7 +938,7 @@ p.comment-form-author {
 	margin: 3% 0%;
 	}
 	div#screenhot {
-	background: #2ABF5E;
+	background: #1C5FA6;
 	padding: 2em 0 3em 0;
 	}
 	.Demo-text {
@@ -1073,7 +1072,7 @@ p.comment-form-author {
 	.gallery-head {
 	margin-bottom: 1em;
 	}
-	#feature h3 {
+	#features h3 {
 	font-size: 2.3em;
 	margin-bottom: 0.3em;
 	}
@@ -1192,7 +1191,7 @@ p.comment-form-author {
 	.gallery-head h3 {
 	font-size: 1.5em;
 	}
-	#feature h3 {
+	#features h3 {
 	font-size: 1.6em;
 	margin-bottom: 0.3em;
 	}
@@ -1212,7 +1211,7 @@ p.comment-form-author {
 	.review-head h3 {
 	font-size: 1.6em;
 	}
-	div#reviews {
+	div#reviewes {
 	padding: 2em 0 2em 0;
 	}
 	div#demo {
@@ -1313,7 +1312,7 @@ p.comment-form-author {
 	.about {
 	padding: 2em 0;
 	}
-	#feature {
+	#features {
 	padding: 1em 0 0em 0em;
 	}
 	.gallery-head p {
@@ -1323,7 +1322,7 @@ p.comment-form-author {
 	overflow: hidden;
 	height: 59px;
 	}
-	#feature h3 {
+	#features h3 {
 	font-size: 1.4em;
 	margin-bottom: 10px;
 	}
@@ -1356,7 +1355,7 @@ p.comment-form-author {
 	border: 4px solid#F2BA13;
 	}
 	.review-img1 img {
-	border: 3px solid#2ABF5E;
+	border: 3px solid#1C5FA6;
 	}
 	.review-text span {
 	font-size: 1em;

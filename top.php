@@ -72,7 +72,7 @@ require 'connection.php';
 			</div>
 			<div class="row">
 				<button id="toggleTags" class="btn btn-success"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Show Tags</button>
-				<div id="tags" class="btn-group btn-group-justified hide" role="group"></div>
+				<div id="tags" class="btn-group btn-group-justified" role="group"></div>
 			</div>
 			<hr>
 			<div class="row">
@@ -162,7 +162,7 @@ require 'connection.php';
 				show += '</div>';
 			}
 			$('#tags').html(show);
-			$('#tags').toggle('slow');
+			$('#tags').show('slow');
 		});
 	});
 	</script>

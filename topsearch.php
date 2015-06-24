@@ -72,9 +72,13 @@ require 'connection.php';
 				</form>
 			</div>
 			<div class="row">
+				<button id="toggleTags" class="btn btn-success"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Show Tags</button>
+				<div id="tags" class="row"></div>
+			</div>
+			<hr>
+			<div class="row">
 				<div id="formulas" class="list-group row"></div>
 			</div>
-
 			<div class="jumbotron" id="loading">
 				<div class="row well" id="items">
 					<img class="center-image" alt="loading..."
@@ -157,11 +161,30 @@ require 'connection.php';
 
 	$('#searchForm').submit(function(){
 		search = $('#search').val();
+		newSearch(search);
+		return false;
+	});
+
+	function newSearch (search) {
 		pg = 1;
 		count = 0;
 		$('#formulas').html('');
 		ajaxCall(search, pg);
-		return false;
+	}
+
+	$('#toggleTags').click(function(event) {
+		$.getJSON('api/top/top.tags.php', function(json, textStatus) {
+			show = '';
+			tags = json.tags;
+			for (var i = 0; i < tags.length; i++) {
+				tag = tags[i];
+				show += '<div class="col-sm-2">';
+					show += '<button class="btn btn-primary full-width" onclick="newSearch(\'' + tag + '\');">'+ tag +'</button>';
+				show += '</div>';
+			}
+			$('#tags').html(show);
+			$('#tags').show('slow');
+		});
 	});
 	</script>
 </body>
