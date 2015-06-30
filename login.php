@@ -36,14 +36,14 @@ if (isset($_COOKIE['ifiusername'])) {
 			<input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 		</form>
-		<h3 style='text-align: center;'>To Register Use Our App</h3>
+		<h3 style='text-align: center;'>To Register <a href="getapp">Get App</a>.</h3>
 		<div class="row thumbnail" style="position:fixed; bottom: 0; left: 0; right: 0; max-height: 100%; z-index: 2; margin: 0px;">
 			<div class="row">
 				<div class="col-sm-12" style="text-align: center;">
 					<button style="position:fixed; right: 0;" class="btn btn-danger" onclick="$(this).parent().parent().parent().hide();">x</button>
 				</div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-sm-5" style="text-align: center; margin: 0px;">
 					<h3 style="font-weight: bold;">Download From</h3>
 				</div>
@@ -53,7 +53,7 @@ if (isset($_COOKIE['ifiusername'])) {
 				<div class="col-sm-3 well" style="text-align: center; margin: 0px;">
 					<a target="_blank" href="http://www.amazon.com/Tej-Pratap-If-I/dp/B00SOP1PSO/"><h4>Amazon App Store</h4></a>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class="notification"></div>

@@ -110,13 +110,6 @@ if ($_POST ['clipText']) {
 		ajaxCall(pg);
 	});
 
-	$(window).scroll(function() {
-	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-		   pg = pg + 1;
-		   ajaxCall(pg);
-	   }
-	});
-
 	count = 0;
 	function ajaxCall(page){
 		$('#loading').show();

@@ -20,7 +20,12 @@ if ($text && $username) {
 	echo "{";
 	echo "\"status\":1";
 	echo "}";
+	onlyTen();
 } else {
 	die ( "{\"status\":0," . "\"error\":\"Enter username, text\"}" );
+}
+
+function onlyTen(){
+	mysql_query("DELETE FROM 'notification' WHERE 'username' = '$username' ORDER BY timestamp DESC LIMIT 10,20;")
 }
 ?>

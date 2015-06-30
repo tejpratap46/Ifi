@@ -12,7 +12,7 @@ require 'connection.php';
 <meta name="author" content="">
 <link rel="icon" href="favicon.ico">
 
-<title>If i</title>
+<title>If i :: Formula</title>
 
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
