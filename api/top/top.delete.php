@@ -16,7 +16,7 @@ if (! empty ( $apikey )) {
 }
 
 if ($index && $formula) {
-	$qs = mysql_query ( "DELETE FROM top WHERE `index` = '" . $index . "'" )) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
+	$qs = mysql_query ( "DELETE FROM top WHERE `index` = '" . $index . "'" ) or die ( "{\"status\":0," . "\"error\":\"" . mysql_error () . "\"}" );
 	echo "{";
 	echo "\"status\":1";
 	echo "}";

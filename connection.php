@@ -12,8 +12,8 @@
    //hostinger
   /*
   $hostname = "mysql.hostinger.in";
-  $database = "u451933511_brain";
-  $user = "u451933511_brain";
+  $database = "u532171590_ifi";
+  $user = "u532171590_ifi";
   $password = "9860637720";
   */
 

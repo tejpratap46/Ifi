@@ -26,6 +26,6 @@ if ($text && $username) {
 }
 
 function onlyTen(){
-	mysql_query("DELETE FROM 'notification' WHERE 'username' = '$username' ORDER BY timestamp DESC LIMIT 10,20;")
+	mysql_query("DELETE FROM 'notification' WHERE 'username' = '$username' ORDER BY timestamp DESC LIMIT 10,20;");
 }
 ?>
